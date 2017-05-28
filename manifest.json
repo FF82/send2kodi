@@ -1,0 +1,44 @@
+{
+	"manifest_version": 2,
+	"name": "Send to Kodi",
+	"version": "0.1",
+	"icons": {
+		"16": "play_16.png",
+		"24": "play_24.png",
+		"32": "play_32.png",
+		"48": "play_48.png",
+		"64": "play_64.png",
+		"128": "play_128.png"
+	},
+	"permissions": [
+		"activeTab",
+		"storage",
+		"*://*/*"
+	],  	
+	"options_ui": {
+		"page": "options.html",
+		"chrome_style": true
+	},
+	"page_action": {
+		"default_icon": {
+			"16": "play_16.png",
+			"24": "play_24.png",
+			"32": "play_32.png",
+			"48": "play_48.png",
+			"64": "play_64.png",
+			"128": "play_128.png"			
+		}
+	},	
+	"background": {
+		"persistent": false,
+		"scripts": [
+			"background.js",
+			"kodi.js"
+		]
+	},
+	"content_scripts": [{
+		"matches": ["*://*/*"],
+		"all_frames": true,
+		"js": ["content.js"]
+	}]
+}
