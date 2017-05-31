@@ -71,11 +71,7 @@ class Player {
 		if (response == null || response.length == 0)
 			return null
 
-		if (response.result != 'OK')
-			return null
-
-		console.log(response)
-		return null
+		return response.result == 'OK'
 	}
 
 	constructor(endpt, id) {
@@ -137,21 +133,28 @@ class Kodi {
 
 	sendVideo(videoURL) {
 		var playlist = Playlist.GetPlaylist(this.endpt, 'video')
-		if (playlist == null)
+		if (playlist == null) {
+			console.log('playlist not found')
 			return
-
-		if (!playlist.clear())
-			return
-
-		if (!playlist.add(videoURL))
-			return
-
-		var player = Player.GetPlayer(this.endpt, 'video')
-		if (player == null) {
-			player = Player.OpenPlayer(this.endpt, playlist)
 		}
 
-		console.log(player)
+		if (!playlist.clear()) {
+			console.log('failed to clear playlist')
+			return
+		}
+
+		if (!playlist.add(videoURL)) {
+			console.log('failed to add video to playlist')
+			return
+		}
+
+		var player = Player.GetPlayer(this.endpt, 'video')
+		if (player != null) {
+			console.log('player already exists')
+			return
+		}
+
+		player = Player.OpenPlayer(this.endpt, playlist)
 	}
 }
 
